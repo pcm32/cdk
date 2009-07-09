@@ -552,6 +552,9 @@
             list="qm,qsar,ionpot,fingerprint,pcore,smsd,tautomer"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="renderawt"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="controlextra"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -597,7 +600,7 @@
             list="test-renderbasic,test-rendercontrol,test-controlbasic"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-renderextra,test-controlextra"/>
+            list="test-renderextra,test-controlextra,test-renderawt"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
             list="test-control"/>
