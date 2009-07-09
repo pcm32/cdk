@@ -44,6 +44,7 @@
       <antcall target="test-module"><param name="module" value="rendercontrol"/></antcall>
       <antcall target="test-module"><param name="module" value="renderextra"/></antcall>
       <antcall target="test-module"><param name="module" value="renderawt"/></antcall>
+      <antcall target="test-module"><param name="module" value="rendersvg"/></antcall>
       <antcall target="test-module"><param name="module" value="reaction"/></antcall>
       <antcall target="test-module"><param name="module" value="libiocml"/></antcall>
       <antcall target="test-module"><param name="module" value="builder3d"/></antcall>
@@ -103,6 +104,7 @@
       <antcall target="test-module"><param name="module" value="test-rendercontrol"/></antcall>
       <antcall target="test-module"><param name="module" value="test-renderextra"/></antcall>
       <antcall target="test-module"><param name="module" value="test-renderawt"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-rendersvg"/></antcall>
     </target>
 
     <target id="test-module" name="test-module"
