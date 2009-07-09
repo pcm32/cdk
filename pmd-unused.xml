@@ -63,6 +63,7 @@
       <antcall target="test-module"><param name="module" value="smsd"/></antcall>
       <antcall target="test-module"><param name="module" value="iordf"/></antcall>
       <antcall target="test-module"><param name="module" value="signature"/></antcall>
+      <antcall target="test-module"><param name="module" value="control"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
       <antcall target="test-module"><param name="module" value="test-cip"/></antcall>
@@ -92,6 +93,7 @@
       <antcall target="test-module"><param name="module" value="test-smsd"/></antcall>
       <antcall target="test-module"><param name="module" value="test-signature"/></antcall>
       <antcall target="test-module"><param name="module" value="test-render"/></antcall>
+      <antcall target="test-module"><param name="module" value="test-control"/></antcall>
       <antcall target="test-module"><param name="module" value="test-renderbasic"/></antcall>
       <antcall target="test-module"><param name="module" value="test-rendercontrol"/></antcall>
     </target>

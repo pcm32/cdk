@@ -1,9 +1,4 @@
-/* $RCSfile$    
- * $Author$    
- * $Date$    
- * $Revision$
- * 
- * Copyright (C) 2004-2007  The Chemistry Development Kit (CDK) project
+/* Copyright (C) 2008-2009  Egon Willighagen <egonw@users.sf.net>
  * 
  * Contact: cdk-devel@lists.sourceforge.net
  * 
@@ -24,21 +19,23 @@
 package org.openscience.cdk.coverage;
 
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
- * TestSuite that runs all the sample tests.
+ * TestSuite that tests that all code is tested in a cheap way, using
+ * a test method naming scheme.
  *
  * @cdk.module test-control
  */
 public class ControlCoverageTest extends CoverageTest {
 
     private final static String CLASS_LIST = "control.javafiles";
-    
+
     @BeforeClass public static void setUp() throws Exception {
         loadClassList(CLASS_LIST, ControlCoverageTest.class.getClassLoader());
     }
 
-    public void testCoverage() {
+    @Test public void testCoverage() {
         super.runCoverageTest();
     }
 }

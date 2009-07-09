@@ -109,6 +109,7 @@
 
       <antcall target="doccheck-module"><param name="module" value="renderbasic"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="rendercontrol"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="control"/></antcall>
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
