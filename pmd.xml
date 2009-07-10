@@ -72,6 +72,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="iordf"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="signature"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="control"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom"/><param name="module" value="controlbasic"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-qm"/><param name="module" value="qm"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-core"/></antcall>
@@ -98,6 +99,7 @@
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-cip"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-diff"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-control"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-controlbasic"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-qm"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-smsd"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="custom-test"/><param name="module" value="test-tautomer"/></antcall>
