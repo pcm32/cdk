@@ -66,6 +66,7 @@
       <antcall target="test-module"><param name="module" value="signature"/></antcall>
       <antcall target="test-module"><param name="module" value="control"/></antcall>
       <antcall target="test-module"><param name="module" value="controlbasic"/></antcall>
+      <antcall target="test-module"><param name="module" value="controlextra"/></antcall>
       <!-- the test modules -->
       <antcall target="test-module"><param name="module" value="test-core"/></antcall>
       <antcall target="test-module"><param name="module" value="test-cip"/></antcall>

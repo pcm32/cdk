@@ -552,6 +552,9 @@
             list="qm,qsar,ionpot,fingerprint,pcore,smsd,tautomer"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
+            list="controlextra"/>
+        <foreach target="compile-module" param="module"
+            parallel="${parallel}" maxthreads="${threadCount}"
             list="qsaratomic,qsarbond,qsarprotein,qsarcml,qsarmolecular"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
@@ -594,10 +597,10 @@
             list="test-renderbasic,test-rendercontrol,test-controlbasic"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-control"/>
+            list="test-renderextra,test-controlextra"/>
         <foreach target="compile-module" param="module"
             parallel="${parallel}" maxthreads="${threadCount}"
-            list="test-renderextra"/>
+            list="test-control"/>
     </target>
 
 	<target id="jarTestdata" name="jarTestdata" description="Creates jar files with test data.">
