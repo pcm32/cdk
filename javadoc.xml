@@ -115,6 +115,7 @@
       <antcall target="doccheck-module"><param name="module" value="control"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="controlbasic"/></antcall>
       <antcall target="doccheck-module"><param name="module" value="controlextra"/></antcall>
+      <antcall target="doccheck-module"><param name="module" value="controlawt"/></antcall>
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="interfaces"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="core"/></antcall>
