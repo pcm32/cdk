@@ -631,6 +631,9 @@
                     <includesfile name="${metainf}/charges.libdepends"/>
                     <includesfile name="${metainf}/log4j.libdepends"/>
                     <includesfile name="${metainf}/control.libdepends"/>
+                    <includesfile name="${metainf}/controlbasic.libdepends"/>
+                    <includesfile name="${metainf}/controlextra.libdepends"/>
+                    <includesfile name="${metainf}/controlawt.libdepends"/>
                     <includesfile name="${metainf}/datadebug.libdepends"/>
                     <includesfile name="${metainf}/data.libdepends"/>
                     <includesfile name="${metainf}/extra.libdepends"/>
@@ -649,6 +652,11 @@
                     <includesfile name="${metainf}/reaction.libdepends"/>
                     <includesfile name="${metainf}/render.libdepends"/>
                     <includesfile name="${metainf}/renderswt.libdepends"/>
+                    <includesfile name="${metainf}/renderbasic.libdepends"/>
+                    <includesfile name="${metainf}/renderextra.libdepends"/>
+                    <includesfile name="${metainf}/rendercontrol.libdepends"/>
+                    <includesfile name="${metainf}/renderawt.libdepends"/>
+                    <includesfile name="${metainf}/rendersvg.libdepends"/>
                     <includesfile name="${metainf}/standard.libdepends"/>
                     <includesfile name="${metainf}/valencycheck.libdepends"/>
                     <includesfile name="${metainf}/sdg.libdepends"/>
@@ -676,6 +684,9 @@
                     <include name="cdk-dict.jar"/>
                     <include name="cdk-diff.jar"/>
                     <include name="cdk-control.jar"/>
+                    <include name="cdk-controlbasic.jar"/>
+                    <include name="cdk-controlextra.jar"/>
+                    <include name="cdk-controlawt.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-extra.jar"/>
@@ -696,6 +707,11 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-renderswt.jar"/>
+                    <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderextra.jar"/>
+                    <include name="cdk-rendercontrol.jar"/>
+                    <include name="cdk-renderawt.jar"/>
+                    <include name="cdk-rendersvg.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
                     <include name="cdk-valencycheck.jar"/>
@@ -750,6 +766,9 @@
                     <include name="cdk-core.jar"/>
                     <include name="cdk-cip.jar"/>
                     <include name="cdk-control.jar"/>
+                    <include name="cdk-controlbasic.jar"/>
+                    <include name="cdk-controlextra.jar"/>
+                    <include name="cdk-controlawt.jar"/>
                     <include name="cdk-datadebug.jar"/>
                     <include name="cdk-data.jar"/>
                     <include name="cdk-diff.jar"/>
@@ -772,6 +791,11 @@
                     <include name="cdk-reaction.jar"/>
                     <include name="cdk-render.jar"/>
                     <include name="cdk-renderswt.jar"/>
+                    <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderextra.jar"/>
+                    <include name="cdk-rendercontrol.jar"/>
+                    <include name="cdk-renderawt.jar"/>
+                    <include name="cdk-rendersvg.jar"/>
                     <include name="cdk-standard.jar"/>
                     <include name="cdk-structgen.jar"/>
                     <include name="cdk-valencycheck.jar"/>
