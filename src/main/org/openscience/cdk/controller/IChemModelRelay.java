@@ -46,7 +46,7 @@ import org.openscience.cdk.renderer.selection.IncrementalSelection;
  */
 public interface IChemModelRelay extends IAtomBondEdits {
 
-	public enum Direction { UP, DOWN };
+	public enum Direction { UP, DOWN, UNDEFINED, EZ_UNDEFINED };
 
     /* Interaction*/
     public IControllerModel getController2DModel();
