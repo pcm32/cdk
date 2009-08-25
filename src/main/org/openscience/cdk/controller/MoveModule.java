@@ -1,9 +1,9 @@
-/* $Revision: 7636 $ $Author: nielsout $ $Date: 2007-01-04 18:46:10 +0100 (Thu, 04 Jan 2007) $
- *
+/* 
  * Copyright (C) 2007  Niels Out <nielsout@users.sf.net>
  * Copyright (C) 2008-2009  Arvid Berg <goglepox@users.sf.net>
  * Copyright (C) 2008  Stefan Kuhn (undo redo)
- *
+ * Copyright (C) 2009  Mark Rijnbeek (markr@ebi.ac.uk)
+  *
  * Contact: cdk-devel@lists.sourceforge.net
  *
  * This program is free software; you can redistribute it and/or
@@ -43,8 +43,7 @@ import org.openscience.cdk.renderer.RendererModel;
 import org.openscience.cdk.tools.LoggingTool;
 
 /**
- * Demo IController2DModule. -write picture to file on doubleclick -show atom
- * name on hove-over -drags atoms around (click near atom and move mouse)
+ * Module to move around a selection of atoms and bonds
  *
  * @author Niels Out
  * @cdk.svnrev $Revision: 9162 $
@@ -58,7 +57,7 @@ public class MoveModule extends ControllerModuleAdapter {
     
     private IAtomContainer undoRedoContainer;
     
-    private Point2d start;
+    private Point2d start2DCenter;
 
     public MoveModule(IChemModelRelay chemObjectRelay) {
         super(chemObjectRelay);
@@ -71,43 +70,65 @@ public class MoveModule extends ControllerModuleAdapter {
         
         IAtomContainer selectedAC = getSelectedAtomContainer(worldCoord );
         if (selectedAC != null) {
-            Point2d current = GeometryTools.get2DCenter(selectedAC);
+
+            // It could be that only a  selected bond is going to be moved. 
+            // So make sure that the attached atoms are included, otherwise
+            // the undo will fail to place the atoms back where they were
+            for (IBond selectedBond : selectedAC.bonds() ) {
+                for (IAtom atom : selectedBond.atoms()) {
+                    if (!selectedAC.contains(atom)) {
+                        selectedAC.addAtom(atom);
+                    }
+                }
+            }
+            
             undoRedoContainer.add(selectedAC);
 
-            start = current;
+            Point2d current = GeometryTools.get2DCenter(selectedAC);
+            start2DCenter = current;
             offset = new Vector2d();
             offset.sub(current, worldCoord);
+            
         } else {
             endMove();
         }
     }
 
     public void mouseClickedUp(Point2d worldCoord) {
-    	if (start != null) {
+    	if (start2DCenter != null) {
             Vector2d end = new Vector2d();
-            end.sub(worldCoord, start);
+
+            // take 2d center of end point to ensure correct positional undo
+            Point2d end2DCenter = GeometryTools.get2DCenter(undoRedoContainer);
+            end.sub(end2DCenter, start2DCenter);
+
+            IUndoRedoFactory factory = chemModelRelay.getUndoRedoFactory();
+            UndoRedoHandler handler = chemModelRelay.getUndoRedoHandler();
+            if (factory != null && handler != null) {
+                IUndoRedoable undoredo = factory.getMoveAtomEdit(
+                        undoRedoContainer, end, this.getDrawModeString());
+                handler.postEdit(undoredo);
+            }
+
+            
             // Do the merge of atoms
             if (!chemModelRelay.getRenderer().getRenderer2DModel().getMerge()
                     .isEmpty()) {
                 chemModelRelay.mergeMolecules(end);
             } else {
                 for(IAtom atom:selection.getConnectedAtomContainer().atoms()) {
-                   chemModelRelay.moveTo( atom, atom.getPoint2d());
-                }
-                IUndoRedoFactory factory = chemModelRelay.getUndoRedoFactory();
-                UndoRedoHandler handler = chemModelRelay.getUndoRedoHandler();
-                if (factory != null && handler != null) {
-                    IUndoRedoable undoredo = factory.getMoveAtomEdit(
-                            undoRedoContainer, end, this.getDrawModeString());
-                    handler.postEdit(undoredo);
+                   //use move without undo to prevent all individual 
+                   //atoms contributing to the undo stack
+                   chemModelRelay.moveToWithoutUndo( atom, atom.getPoint2d());
                 }
             }
+
     	}
     	endMove();
     }
 
     private void endMove() {
-        start = null;
+        start2DCenter = null;
         selection = null;
         offset = null;
     }
