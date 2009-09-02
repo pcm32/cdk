@@ -92,6 +92,7 @@ public abstract class ControllerModuleAdapter implements IControllerModule {
 	}
 
 	public void setChemModelRelay(IChemModelRelay relay) {
+	    this.chemModelRelay = relay;
 	}
 
     protected IChemObject getHighlighted( Point2d worldCoord, IChemObject... objects ) {
