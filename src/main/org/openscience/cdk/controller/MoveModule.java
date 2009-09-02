@@ -174,10 +174,6 @@ public class MoveModule extends ControllerModuleAdapter {
         }
     }
 
-    public void setChemModelRelay(IChemModelRelay relay) {
-        this.chemModelRelay = relay;
-    }
-
 	public String getDrawModeString() {
 		return "Move";
 	}

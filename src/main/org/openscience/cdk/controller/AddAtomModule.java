@@ -61,10 +61,6 @@ public class AddAtomModule extends ControllerModuleAdapter {
 		chemModelRelay.updateView();
 	}
 
-	public void setChemModelRelay(IChemModelRelay relay) {
-		this.chemModelRelay = relay;
-	}
-
 	public String getDrawModeString() {
 		return "Add Atom Or Change Element";
 	}

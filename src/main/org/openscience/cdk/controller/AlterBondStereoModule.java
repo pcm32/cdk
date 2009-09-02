@@ -78,10 +78,6 @@ public class AlterBondStereoModule extends ControllerModuleAdapter {
 		super.chemModelRelay.updateView();
 	}
 
-	public void setChemModelRelay(IChemModelRelay relay) {
-		this.chemModelRelay = relay;
-	}
-
 	public String getDrawModeString() {
 		if (desiredDirection == Direction.UP) {
 			return "Add or convert to bond up";

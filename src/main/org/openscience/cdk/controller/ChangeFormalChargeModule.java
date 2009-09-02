@@ -67,10 +67,6 @@ public class ChangeFormalChargeModule extends ControllerModuleAdapter {
 	    chemModelRelay.updateView();// FIXME do you really need to call it here?
 	}
 
-	public void setChemModelRelay(IChemModelRelay relay) {
-		this.chemModelRelay = relay;
-	}
-
 	public String getDrawModeString() {
 		if (change < 0)
             return "Decrease Charge";

@@ -79,10 +79,6 @@ public class CycleSymbolModule extends ControllerModuleAdapter {
         chemModelRelay.updateView();
     }
 
-    public void setChemModelRelay(IChemModelRelay relay) {
-        this.chemModelRelay = relay;
-    }
-
 	public String getDrawModeString() {
 		return "Cycle Symbol";
 	}
