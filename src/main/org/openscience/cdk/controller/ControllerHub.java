@@ -1874,8 +1874,7 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
                 shift.sub(atomB.getPoint2d(), atomA.getPoint2d());
                 
                 for (IAtom shiftAtom : movedAtomContainer.atoms()) {
-                    shiftAtom.getPoint2d().x+=shift.x;
-                    shiftAtom.getPoint2d().y+=shift.y;
+                    shiftAtom.getPoint2d().add( shift );
                 }
             }
         }
