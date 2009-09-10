@@ -1869,7 +1869,7 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
                     .getSelection().getConnectedAtomContainer();
             if (movedAtomContainer != null) {
                 IAtom atomA = (IAtom) it.next();
-                IAtom atomB = model.getMerge().get(atomA);
+                IAtom atomB = mergeMap.get(atomA);
                 Vector2d shift = new Vector2d();
                 shift.sub(atomB.getPoint2d(), atomA.getPoint2d());
                 
