@@ -25,12 +25,6 @@
  */
 package org.openscience.cdk.controller;
 
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_DOWN;
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_DOWN_INV;
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_NONE;
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_UP;
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_UP_INV;
-
 import java.awt.geom.Rectangle2D;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,7 +34,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Renderer;
 import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
@@ -559,12 +552,12 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 
 	public void cycleBondValence(IBond bond) {
 		IBond.Order[] orders=new IBond.Order[2];
-		Integer[] stereos=new Integer[2];
+		IBond.Stereo[] stereos=new IBond.Stereo[2];
 		orders[1]=bond.getOrder();
 		stereos[1]=bond.getStereo();
 	    // special case : reset stereo bonds
-	    if (bond.getStereo() != STEREO_BOND_NONE) {
-	        bond.setStereo(STEREO_BOND_NONE);
+	    if (bond.getStereo() != IBond.Stereo.NONE) {
+	        bond.setStereo(IBond.Stereo.NONE);
 	    }else{
 	        // cycle the bond order up to maxOrder
 		    IBond.Order maxOrder = getController2DModel().getMaxOrder();
@@ -577,14 +570,17 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
         orders[0]=bond.getOrder();
         stereos[0]=bond.getStereo();
 		Map<IBond, IBond.Order[]> changedBonds = new HashMap<IBond, IBond.Order[]>();
-		Map<IBond, Integer[]> changedBondsStereo = new HashMap<IBond, Integer[]>();
+		Map<IBond, IBond.Stereo[]> changedBondsStereo =
+			new HashMap<IBond, IBond.Stereo[]>();
 		changedBonds.put(bond,orders);
 		changedBondsStereo.put(bond, stereos);
         updateAtom(bond.getAtom(0));
         updateAtom(bond.getAtom(1));
 		structureChanged();
 	    if(undoredofactory!=null && undoredohandler!=null){
-	    	IUndoRedoable undoredo = undoredofactory.getAdjustBondOrdersEdit(changedBonds, changedBondsStereo, "Adjust Bond Order",this);
+	    	IUndoRedoable undoredo = undoredofactory.getAdjustBondOrdersEdit(
+	    		changedBonds, changedBondsStereo, "Adjust Bond Order",this
+	        );
 		    undoredohandler.postEdit(undoredo);
 	    }
 	}
@@ -601,9 +597,9 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
         IBond newBond = atomContainer.getBond(atom, newAtom);
 
         if (desiredDirection == Direction.UP) {
-            newBond.setStereo(STEREO_BOND_UP);
+            newBond.setStereo(IBond.Stereo.UP);
         } else {
-            newBond.setStereo(STEREO_BOND_DOWN);
+            newBond.setStereo(IBond.Stereo.DOWN);
         }
         undoRedoContainer.addAtom(newAtom);
         undoRedoContainer.addBond(newBond);
@@ -702,7 +698,12 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
         updateAtom(bond.getAtom(1));
         structurePropertiesChanged();
 	    if(getUndoRedoFactory()!=null && getUndoRedoHandler()!=null){
-		    IUndoRedoable undoredo = getUndoRedoFactory().getAdjustBondOrdersEdit(changedBonds, new HashMap<IBond, Integer[]>(), "Changed Bond Order to "+order, this);
+		    IUndoRedoable undoredo =
+		    	getUndoRedoFactory().getAdjustBondOrdersEdit(changedBonds, 
+		        new HashMap<IBond, IBond.Stereo[]>(),
+		        "Changed Bond Order to "+order,
+		        this
+		    );
 		    getUndoRedoHandler().postEdit(undoredo);
 	    }
     }
@@ -724,7 +725,7 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
         structurePropertiesChanged();
     }
 
-    public void setWedgeType(IBond bond, int type) {
+    public void setWedgeType(IBond bond, IBond.Stereo type) {
         bond.setStereo(type);
         structurePropertiesChanged();
     }
@@ -780,7 +781,7 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
     }
 
     public void makeBondStereo(IBond bond, Direction desiredDirection) {
-        int stereo = bond.getStereo();
+        IBond.Stereo stereo = bond.getStereo();
         boolean isUp = isUp(stereo);
         boolean isDown = isDown(stereo);
         boolean noStereo = noStereo(stereo);
@@ -793,21 +794,28 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
         } else if (isDown && desiredDirection == Direction.DOWN) {
             flipDirection(bond, stereo);
         } else if (noStereo && desiredDirection == Direction.UP) {
-            bond.setStereo(STEREO_BOND_UP);
+            bond.setStereo(IBond.Stereo.UP);
         } else if (noStereo && desiredDirection == Direction.DOWN) {
-            bond.setStereo(STEREO_BOND_DOWN);
+            bond.setStereo(IBond.Stereo.DOWN);
         }
-        Integer[] stereos=new Integer[2];
+        IBond.Stereo[] stereos = new IBond.Stereo[2];
         stereos[1]=stereo;
         stereos[0]=bond.getStereo();
 		Map<IBond, IBond.Order[]> changedBonds = new HashMap<IBond, IBond.Order[]>();
-		Map<IBond, Integer[]> changedBondsStereo = new HashMap<IBond, Integer[]>();
+		Map<IBond, IBond.Stereo[]> changedBondsStereo =
+			new HashMap<IBond, IBond.Stereo[]>();
 		changedBondsStereo.put(bond, stereos);
 		updateAtom(bond.getAtom(0));
 		updateAtom(bond.getAtom(1));
 		structureChanged();
 	    if(getUndoRedoFactory()!=null && getUndoRedoHandler()!=null){
-	    	IUndoRedoable undoredo = getUndoRedoFactory().getAdjustBondOrdersEdit(changedBonds, changedBondsStereo, "Adjust Bond Stereo",this);
+	    	IUndoRedoable undoredo =
+	    		getUndoRedoFactory().getAdjustBondOrdersEdit(
+	    			changedBonds,
+	    			changedBondsStereo,
+	    			"Adjust Bond Stereo",
+	    			this
+	    	    );
 		    getUndoRedoHandler().postEdit(undoredo);
 	    }
     }
@@ -818,11 +826,15 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 	 * @param bond the bond to change
 	 * @param stereo the current stereo of that bond
 	 */
-	private void flipDirection(IBond bond, int stereo) {
-	    if (stereo == STEREO_BOND_UP) bond.setStereo(STEREO_BOND_UP_INV);
-	    else if (stereo == STEREO_BOND_UP_INV) bond.setStereo(STEREO_BOND_UP);
-	    else if (stereo == STEREO_BOND_DOWN_INV) bond.setStereo(STEREO_BOND_DOWN);
-	    else if (stereo == STEREO_BOND_DOWN) bond.setStereo(STEREO_BOND_DOWN_INV);
+	private void flipDirection(IBond bond, IBond.Stereo stereo) {
+	    if (stereo == IBond.Stereo.UP)
+	    	bond.setStereo(IBond.Stereo.UP_INVERTED);
+	    else if (stereo == IBond.Stereo.UP_INVERTED)
+	    	bond.setStereo(IBond.Stereo.UP);
+	    else if (stereo == IBond.Stereo.DOWN_INVERTED)
+	    	bond.setStereo(IBond.Stereo.DOWN);
+	    else if (stereo == IBond.Stereo.DOWN)
+	    	bond.setStereo(IBond.Stereo.DOWN_INVERTED);
 	}
 
 
@@ -831,23 +843,29 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 	 * @param bond the bond to change
 	 * @param stereo the current stereo of the bond
 	 */
-	private void flipOrientation(IBond bond, int stereo) {
-	    if (stereo == STEREO_BOND_UP) bond.setStereo(STEREO_BOND_DOWN_INV);
-        else if (stereo == STEREO_BOND_UP_INV) bond.setStereo(STEREO_BOND_DOWN);
-        else if (stereo == STEREO_BOND_DOWN_INV) bond.setStereo(STEREO_BOND_UP);
-        else if (stereo == STEREO_BOND_DOWN) bond.setStereo(STEREO_BOND_UP_INV);
+	private void flipOrientation(IBond bond, IBond.Stereo stereo) {
+	    if (stereo == IBond.Stereo.UP)
+	    	bond.setStereo(IBond.Stereo.DOWN_INVERTED);
+        else if (stereo == IBond.Stereo.UP_INVERTED)
+        	bond.setStereo(IBond.Stereo.DOWN);
+        else if (stereo == IBond.Stereo.DOWN_INVERTED) 
+        	bond.setStereo(IBond.Stereo.UP);
+        else if (stereo == IBond.Stereo.DOWN) 
+        	bond.setStereo(IBond.Stereo.UP_INVERTED);
 	}
 
-	private boolean isUp(int stereo) {
-	    return stereo == STEREO_BOND_UP || stereo == STEREO_BOND_UP_INV;
+	private boolean isUp(IBond.Stereo stereo) {
+	    return stereo == IBond.Stereo.UP || stereo == IBond.Stereo.UP_INVERTED;
 	}
 
-    private boolean isDown(int stereo) {
-        return stereo == STEREO_BOND_DOWN || stereo == STEREO_BOND_DOWN_INV;
+    private boolean isDown(IBond.Stereo stereo) {
+        return stereo == IBond.Stereo.DOWN ||
+               stereo == IBond.Stereo.DOWN_INVERTED;
     }
 
-    private boolean noStereo(int stereo) {
-        return stereo == STEREO_BOND_NONE || stereo == CDKConstants.STEREO_BOND_UNDEFINED;
+    private boolean noStereo(IBond.Stereo stereo) {
+        return stereo == IBond.Stereo.NONE ||
+               stereo == CDKConstants.UNSET;
     }
     
     public static void avoidOverlap(IChemModel chemModel){
@@ -1453,7 +1471,11 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 		if(this.getController2DModel().getAutoUpdateImplicitHydrogens())
 			updateImplicitHydrogenCounts();
 	    if(undoredofactory!=null && undoredohandler!=null){
-	    	IUndoRedoable undoredo = undoredofactory.getAdjustBondOrdersEdit(changedBonds, new HashMap<IBond, Integer[]>(), "Adjust Bond Order of Molecules",this);
+	    	IUndoRedoable undoredo = undoredofactory.
+	    	    getAdjustBondOrdersEdit(
+	    	    	changedBonds, new HashMap<IBond, IBond.Stereo[]>(),
+	    	    	"Adjust Bond Order of Molecules",this
+	    	    );
 		    undoredohandler.postEdit(undoredo);
 	    }
 	}
@@ -1477,7 +1499,12 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 		if(this.getController2DModel().getAutoUpdateImplicitHydrogens())
 			updateImplicitHydrogenCounts();
 	    if(undoredofactory!=null && undoredohandler!=null){
-	    	IUndoRedoable undoredo = undoredofactory.getAdjustBondOrdersEdit(changedBonds, new HashMap<IBond, Integer[]>(), "Reset Bond Order of Molecules",this);
+	    	IUndoRedoable undoredo = undoredofactory.
+	    		getAdjustBondOrdersEdit(
+	    			changedBonds,
+	    			new HashMap<IBond, IBond.Stereo[]>(),
+	    			"Reset Bond Order of Molecules",this
+	    		);
 		    undoredohandler.postEdit(undoredo);
 	    }
 	}

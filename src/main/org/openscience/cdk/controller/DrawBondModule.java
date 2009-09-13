@@ -24,14 +24,11 @@
  */
 package org.openscience.cdk.controller;
 
-import static org.openscience.cdk.CDKConstants.STEREO_BOND_NONE;
-
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 import org.openscience.cdk.tools.manipulator.BondManipulator;
-
 
 /**
  * @cdk.module controlbasic
@@ -47,8 +44,8 @@ public class DrawBondModule extends ControllerModuleAdapter {
 
     private void cycleBondValence(IBond bond) {
         // special case : reset stereo bonds
-        if (bond.getStereo() != STEREO_BOND_NONE) {
-            bond.setStereo(STEREO_BOND_NONE);
+        if (bond.getStereo() != IBond.Stereo.NONE) {
+            bond.setStereo(IBond.Stereo.NONE);
             chemModelRelay.updateView();
             return;
         }
