@@ -30,50 +30,44 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Edit representing the connection of two atoms with a bond.
- * @author Arvid
- * @cdk.module controlbasic
- */
-public class AddBond extends AbstractEdit implements IEdit{
+* Edit representing the removal of a bond.
+* @author Arvid
+* @cdk.module controlbasic
+*/
+public class RemoveBond extends AbstractEdit {
 
-    IAtom atom1;
-    IAtom atom2;
-
-    IBond newBond;
+    IBond bond;
 
     /**
-     * Creates an edit representing the creation of a bond between the given
-     * atoms.
-     * @param atom1 first atom of the bond.
-     * @param atom2 second atom of the bond.
-     * @return edit representing creation of the bond.
+     * Creates an edit that removes the bond given as argument.
+     * @param bond to be removed.
+     * @return edit representing the removal.
      */
-    public static AddBond addBond(IAtom atom1, IAtom atom2) {
-        return new AddBond(atom1,atom2);
+    public static RemoveBond remove(IBond bond) {
+        return new RemoveBond( bond );
     }
 
-    private AddBond(IAtom atom1, IAtom atom2) {
-        this.atom1 = atom1;
-        this.atom2 = atom2;
+    private RemoveBond(IBond bond) {
+        this.bond = bond;
     }
+
+    public Set<Changed> getTypeOfChanges() {
+        return changed( Changed.Structure );
+    }
+
     public void redo() {
 
-        newBond = model.getBuilder().newBond(atom1,atom2);
-        model.addBond( newBond );
+        IAtom a1 = bond.getAtom( 0 );
+        IAtom a2 = bond.getAtom( 1 );
 
-        updateHydrogenCount( atom1,atom2 );
+        model.removeBond( bond );
+        updateHydrogenCount( a1,a2 );
     }
 
     public void undo() {
 
-        model.removeBond( newBond);
-
-        updateHydrogenCount( new IAtom[] { newBond.getAtom( 0 ),
-                                           newBond.getAtom(1)} );
+        model.addBond( bond );
+        updateHydrogenCount( bond.getAtom( 0 ), bond.getAtom( 1 ) );
     }
 
-    public Set<Changed> getTypeOfChanges() {
-
-        return changed( Changed.Structure );
-    }
 }

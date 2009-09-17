@@ -27,53 +27,58 @@ import java.util.Set;
 
 import org.openscience.cdk.controller.Changed;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Edit representing the connection of two atoms with a bond.
- * @author Arvid
- * @cdk.module controlbasic
- */
-public class AddBond extends AbstractEdit implements IEdit{
+* Edit representing a change of an atom's formal charge.
+* @author Arvid
+* @cdk.module controlbasic
+*/
+public class SetCharge extends AbstractEdit {
 
-    IAtom atom1;
-    IAtom atom2;
-
-    IBond newBond;
+    IAtom atom;
+    Integer newCharge;
+    Integer oldCharge;
 
     /**
-     * Creates an edit representing the creation of a bond between the given
-     * atoms.
-     * @param atom1 first atom of the bond.
-     * @param atom2 second atom of the bond.
-     * @return edit representing creation of the bond.
+     *
+     * @param atom to change.
+     * @param charge new formal charge.
+     * @return edit representing the change in formal charge.
      */
-    public static AddBond addBond(IAtom atom1, IAtom atom2) {
-        return new AddBond(atom1,atom2);
+    public static SetCharge setCharge(IAtom atom, int charge) {
+        return new SetCharge(atom,charge);
     }
 
-    private AddBond(IAtom atom1, IAtom atom2) {
-        this.atom1 = atom1;
-        this.atom2 = atom2;
-    }
-    public void redo() {
-
-        newBond = model.getBuilder().newBond(atom1,atom2);
-        model.addBond( newBond );
-
-        updateHydrogenCount( atom1,atom2 );
+    /**
+     * Creates an edit that clears the formal charge of an atom.
+     * @param atom to operate on.
+     * @return edit representing the clearing of the formal charge.
+     */
+    public static SetCharge clearCharge(IAtom atom) {
+        return new SetCharge(atom,null);
     }
 
-    public void undo() {
-
-        model.removeBond( newBond);
-
-        updateHydrogenCount( new IAtom[] { newBond.getAtom( 0 ),
-                                           newBond.getAtom(1)} );
+    private SetCharge(IAtom atom, Integer charge) {
+        this.atom = atom;
+        this.newCharge = charge;
+        this.oldCharge = atom.getFormalCharge();
     }
 
     public Set<Changed> getTypeOfChanges() {
 
-        return changed( Changed.Structure );
+        return changed( Changed.Properties );
     }
+
+    public void redo() {
+        atom.setFormalCharge( newCharge );
+        updateHydrogenCount( atom );
+    }
+
+    public void undo() {
+
+        atom.setFormalCharge( oldCharge );
+        updateHydrogenCount( atom );
+
+    }
+
 }

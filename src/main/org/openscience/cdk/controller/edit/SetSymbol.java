@@ -27,53 +27,47 @@ import java.util.Set;
 
 import org.openscience.cdk.controller.Changed;
 import org.openscience.cdk.interfaces.IAtom;
-import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Edit representing the connection of two atoms with a bond.
- * @author Arvid
- * @cdk.module controlbasic
- */
-public class AddBond extends AbstractEdit implements IEdit{
+* Edit for changing symbol of an atom.
+* @author Arvid
+* @cdk.module controlbasic
+*/
+public class SetSymbol extends AbstractEdit{
 
-    IAtom atom1;
-    IAtom atom2;
-
-    IBond newBond;
+    IAtom atom;
+    String symbol;
+    String oldSymbol;
 
     /**
-     * Creates an edit representing the creation of a bond between the given
-     * atoms.
-     * @param atom1 first atom of the bond.
-     * @param atom2 second atom of the bond.
-     * @return edit representing creation of the bond.
+     * Creates an edit for changing the given atom's symbol.
+     *
+     * @param atom to change.
+     * @param symbol to change to.
+     * @return an edit representing this change.
      */
-    public static AddBond addBond(IAtom atom1, IAtom atom2) {
-        return new AddBond(atom1,atom2);
+    public static SetSymbol setSymbol(IAtom atom, String symbol) {
+        return new SetSymbol(atom,symbol);
     }
 
-    private AddBond(IAtom atom1, IAtom atom2) {
-        this.atom1 = atom1;
-        this.atom2 = atom2;
+    private SetSymbol(IAtom atom, String symbol) {
+        this.atom = atom;
+        this.symbol = symbol;
     }
+
     public void redo() {
-
-        newBond = model.getBuilder().newBond(atom1,atom2);
-        model.addBond( newBond );
-
-        updateHydrogenCount( atom1,atom2 );
+        oldSymbol = atom.getSymbol();
+        atom.setSymbol(symbol);
+        updateHydrogenCount(atom);
     }
 
     public void undo() {
 
-        model.removeBond( newBond);
-
-        updateHydrogenCount( new IAtom[] { newBond.getAtom( 0 ),
-                                           newBond.getAtom(1)} );
+        atom.setSymbol(oldSymbol);
+        updateHydrogenCount(atom);
     }
 
     public Set<Changed> getTypeOfChanges() {
-
-        return changed( Changed.Structure );
+        return changed(Changed.Properties);
     }
 }

@@ -26,54 +26,50 @@ package org.openscience.cdk.controller.edit;
 import java.util.Set;
 
 import org.openscience.cdk.controller.Changed;
-import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IBond;
 
 /**
- * Edit representing the connection of two atoms with a bond.
- * @author Arvid
- * @cdk.module controlbasic
- */
-public class AddBond extends AbstractEdit implements IEdit{
+* Edit for changing the stereo order of a bond.
+* @author Arvid
+* @cdk.module controlbasic
+*/
+public class SetStereo extends AbstractEdit {
 
-    IAtom atom1;
-    IAtom atom2;
-
-    IBond newBond;
+    IBond bond;
+    IBond.Stereo newStereo;
+    IBond.Stereo oldStereo;
 
     /**
-     * Creates an edit representing the creation of a bond between the given
-     * atoms.
-     * @param atom1 first atom of the bond.
-     * @param atom2 second atom of the bond.
-     * @return edit representing creation of the bond.
+     * Creates an edit representing a change in stereo type.
+     * @param bond affected bond.
+     * @param stereo new value.
+     * @return edit representing the change.
      */
-    public static AddBond addBond(IAtom atom1, IAtom atom2) {
-        return new AddBond(atom1,atom2);
+    public static SetStereo setStereo(IBond bond, IBond.Stereo stereo) {
+        return new SetStereo(bond, stereo);
     }
 
-    private AddBond(IAtom atom1, IAtom atom2) {
-        this.atom1 = atom1;
-        this.atom2 = atom2;
-    }
-    public void redo() {
-
-        newBond = model.getBuilder().newBond(atom1,atom2);
-        model.addBond( newBond );
-
-        updateHydrogenCount( atom1,atom2 );
-    }
-
-    public void undo() {
-
-        model.removeBond( newBond);
-
-        updateHydrogenCount( new IAtom[] { newBond.getAtom( 0 ),
-                                           newBond.getAtom(1)} );
+    private SetStereo(IBond bond, IBond.Stereo stereo) {
+        this.bond = bond;
+        newStereo = stereo;
+        oldStereo = bond.getStereo();
     }
 
     public Set<Changed> getTypeOfChanges() {
 
-        return changed( Changed.Structure );
+        return changed( Changed.Properties );
     }
+
+    public void redo() {
+
+        bond.setStereo( newStereo );
+        updateHydrogenCount( bond );
+    }
+
+    public void undo() {
+
+        bond.setStereo( oldStereo );
+        updateHydrogenCount( bond );
+    }
+
 }

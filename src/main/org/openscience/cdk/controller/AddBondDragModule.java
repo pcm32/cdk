@@ -180,21 +180,21 @@ public class AddBondDragModule extends ControllerModuleAdapter {
 
         if(start.distance( worldCoord )< getHighlightDistance()) {
             if(newSource)
-                edit = AddAtom.edit( "C", start );
+                edit = AddAtom.createAtom( "C", start );
             else
-                edit = AppendAtom.edit( "C", source );
+                edit = AppendAtom.appendAtom( "C", source );
         }
         else
             if(merge != null) {
                 if(newSource)
-                    edit = AppendAtom.edit("C",merge,start);
+                    edit = AppendAtom.appendAtom( "C",merge,start);
                 else
-                    edit = AddBond.edit( source, merge );
+                    edit = AddBond.addBond( source, merge );
             }else {
                 if(newSource)
                     edit = CreateBond.edit( start,dest);
                 else
-                    edit = AppendAtom.edit("C",source,dest);
+                    edit = AppendAtom.appendAtom("C",source,dest);
             }
         chemModelRelay.execute(edit);
 
