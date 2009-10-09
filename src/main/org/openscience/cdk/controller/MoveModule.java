@@ -28,7 +28,9 @@ package org.openscience.cdk.controller;
 
 import static org.openscience.cdk.controller.edit.CompositEdit.compose;
 import static org.openscience.cdk.controller.edit.Merge.merge;
-import static org.openscience.cdk.controller.edit.MoveOptionalUndo.move;
+import static org.openscience.cdk.controller.edit.Move.move;
+import static org.openscience.cdk.controller.edit.OptionalUndoEdit.wrapFinal;
+import static org.openscience.cdk.controller.edit.OptionalUndoEdit.wrapNonFinal;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,7 +46,6 @@ import javax.vecmath.Point2d;
 import javax.vecmath.Vector2d;
 
 import org.openscience.cdk.controller.edit.IEdit;
-import org.openscience.cdk.controller.edit.MoveOptionalUndo;
 import org.openscience.cdk.geometry.GeometryTools;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
@@ -121,15 +122,15 @@ public class MoveModule extends ControllerModuleAdapter {
                 // more attractive and avoid tilted rings
                 Vector2d shift = calcualteShift( mergeMap );
 
-                IEdit smallMove = move( shift, false, atomsToMove );
+                IEdit smallMove = wrapNonFinal( move( shift, atomsToMove ));
                 shift.add( end );
-                IEdit shiftEdit = move( shift, true, atomsToMove);
+                IEdit shiftEdit = wrapFinal( move( shift, atomsToMove));
 
                 IEdit mergeEdit = merge(mergeMap);
                 mergeMap.clear();
                 chemModelRelay.execute( compose(smallMove, shiftEdit, mergeEdit) );
             }else {
-                IEdit edit = MoveOptionalUndo.move( end, true, atomsToMove );
+                IEdit edit = wrapFinal( move( end, atomsToMove ));
                 chemModelRelay.execute(edit);
             }
     	}
@@ -161,7 +162,7 @@ public class MoveModule extends ControllerModuleAdapter {
             Vector2d d = new Vector2d();
             d.sub(worldCoordTo, worldCoordFrom);
 
-            IEdit edit  = MoveOptionalUndo.move( d, false, atomsToMove );
+            IEdit edit  = wrapNonFinal( move( d, atomsToMove ));
             // check for possible merges
             RendererModel model =
                 chemModelRelay.getRenderer().getRenderer2DModel();

@@ -41,7 +41,7 @@ import org.openscience.cdk.CDKConstants;
 import org.openscience.cdk.atomtype.CDKAtomTypeMatcher;
 import org.openscience.cdk.config.IsotopeFactory;
 import org.openscience.cdk.controller.edit.IEdit;
-import org.openscience.cdk.controller.edit.MoveOptionalUndo;
+import org.openscience.cdk.controller.edit.OptionalUndoEdit;
 import org.openscience.cdk.controller.undoredo.IUndoRedoFactory;
 import org.openscience.cdk.controller.undoredo.IUndoRedoable;
 import org.openscience.cdk.controller.undoredo.UndoRedoHandler;
@@ -1959,8 +1959,9 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 
         IAtomContainer ac = chemModel.getMoleculeSet().getAtomContainer( 0 );
         edit.execute(ac);
-        if(edit instanceof MoveOptionalUndo && !((MoveOptionalUndo)edit).isFinal())
-            ;
+        if( edit instanceof OptionalUndoEdit
+            && !((OptionalUndoEdit)edit).isFinal())
+            ;//The optional edit is not final so do not put in on the undo stack
         else
             postEdit( edit );
         //TODO add implicit hydrogen calculation and aromacity
