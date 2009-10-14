@@ -169,7 +169,7 @@ public class MoveModule extends ControllerModuleAdapter {
             model.getMerge().clear();
 
             model.getMerge().putAll( calculateMerge( atomsToMove,
-              chemModelRelay.getIChemModel().getMoleculeSet().getAtomContainer( 0 ) ,
+                                     getModel() ,
               getHighlightDistance()));
 
             chemModelRelay.execute( edit );

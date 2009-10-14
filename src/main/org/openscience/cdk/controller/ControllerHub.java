@@ -146,12 +146,20 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
 		return controllerModel;
 	}
 
+	public IControllerModel getControlModel() {
+	     return controllerModel;
+	}
+
 	public IRenderer getRenderer() {
 		return renderer;
 	}
 
+	public RendererModel getRenderModel() {
+	    return renderer.getRenderer2DModel();
+	}
+
 	public IChemModel getIChemModel() {
-		return chemModel;
+	    return chemModel;
 	}
 
   public void setChemModel(IChemModel model) {

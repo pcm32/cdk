@@ -24,6 +24,9 @@
  */
 package org.openscience.cdk.controller;
 
+import static org.openscience.cdk.controller.MoveModule.calculateMerge;
+import static org.openscience.cdk.geometry.GeometryTools.getBondLengthAverage;
+
 import java.util.Map;
 
 import javax.vecmath.Point2d;
@@ -101,9 +104,8 @@ public class AddRingModule extends ControllerModuleAdapter {
     public void mouseMove( Point2d worldCoord ) {
 
         if(ring==null) {
-            bondLength = GeometryTools.getBondLengthAverage( chemModelRelay.getIChemModel()
-                                                             .getMoleculeSet().getAtomContainer( 0 ) );
-            ring = chemModelRelay.getIChemModel().getBuilder().newRing(ringSize, "C");
+            bondLength = getBondLengthAverage( getModel() );
+            ring = getModel().getBuilder().newRing(ringSize, "C");
             if(addingBenzene)
                 makeRingAromatic( ring );
             for(IBond bond:ring.bonds()){
@@ -113,11 +115,10 @@ public class AddRingModule extends ControllerModuleAdapter {
             }
         }
         ringPlacer.placeRing(ring, worldCoord, bondLength);
-        Map<IAtom,IAtom> merge = MoveModule.calculateMerge( ring,
-                                                chemModelRelay.getIChemModel()
-                                         .getMoleculeSet().getAtomContainer( 0 ),
-                                         getHighlightDistance() );
-        Map<IAtom,IAtom> oldMerge = chemModelRelay.getRenderer().getRenderer2DModel().getMerge();
+        Map<IAtom,IAtom> merge = calculateMerge( ring,
+                                                 getModel(),
+                                                 getHighlightDistance() );
+        Map<IAtom,IAtom> oldMerge = chemModelRelay.getRenderModel().getMerge();
         oldMerge.clear();
         oldMerge.putAll( merge );
         chemModelRelay.updateView();

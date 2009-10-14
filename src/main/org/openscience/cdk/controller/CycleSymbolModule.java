@@ -61,7 +61,7 @@ public class CycleSymbolModule extends ControllerModuleAdapter {
 
 
         String symbol = closestAtom.getSymbol();
-        String[] elements = chemModelRelay.getController2DModel().getCommonElements();
+        String[] elements = chemModelRelay.getControlModel().getCommonElements();
         IEdit edit = null;
         for (int i = 0; i < elements.length; i++) {
             if (elements[i].equals(symbol)) {
