@@ -30,7 +30,6 @@ import org.openscience.cdk.controller.edit.IEdit;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.interfaces.IBond;
-import org.openscience.cdk.interfaces.IChemModel;
 import org.openscience.cdk.renderer.IRenderer;
 import org.openscience.cdk.renderer.RendererModel;
 
@@ -41,11 +40,11 @@ public interface IChemModelRelay extends IAtomBondEdits {
 
 	public enum Direction { UP, DOWN, UNDEFINED, EZ_UNDEFINED };
 
+    public RendererModel getRenderModel();
+    public IControllerModel getControlModel();
+
     /* Interaction*/
-    public IControllerModel getController2DModel();
     public IRenderer getRenderer();
-    public IChemModel getIChemModel();
-    public void setChemModel(IChemModel model);
     public IAtom getClosestAtom(Point2d worldCoord);
     public IBond getClosestBond(Point2d worldCoord);
 

@@ -40,12 +40,8 @@ import org.openscience.cdk.renderer.selection.IncrementalSelection;
 @Deprecated
 public interface IOldChemModelRelay {
     
-
-    /* Interaction*/
-    public IControllerModel getController2DModel();
     public IChemModel getIChemModel();
-    public void setChemModel(IChemModel model);
-    
+
     /**
      * Get the closest atom that is in 'range' (highlight distance) of the
      * atom 'atom', ignoring all the atoms in the collection 'toIgnore'.
@@ -65,11 +61,10 @@ public interface IOldChemModelRelay {
      */
     public IAtom getClosestAtom(IAtom atom);
     
-    public void updateView();
     public void select(IncrementalSelection selection);
 
     /* Event model */
-    
+    public void updateView();
     public void fireZoomEvent();
     public void fireStructureChangedEvent();
     
