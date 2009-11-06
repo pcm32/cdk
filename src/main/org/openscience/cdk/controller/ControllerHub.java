@@ -1988,7 +1988,10 @@ public class ControllerHub implements IMouseEventRelay, IChemModelRelay {
             ;//The optional edit is not final so do not put in on the undo stack
         else
             postEdit( edit );
-        //TODO add implicit hydrogen calculation and aromacity
+
+        for(IAtom atom:edit.getAtomsToUpdate()) {
+            updateAtom( ac, atom );
+        }
         fireEvents( edit.getTypeOfChanges() );
     }
 
