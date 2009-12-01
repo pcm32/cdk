@@ -26,6 +26,7 @@ package org.openscience.cdk.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.vecmath.Point2d;
 
 import org.openscience.cdk.controller.undoredo.IUndoRedoFactory;
@@ -34,7 +35,8 @@ import org.openscience.cdk.controller.undoredo.UndoRedoHandler;
 import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IAtomContainer;
 import org.openscience.cdk.renderer.selection.IChemObjectSelection;
-import org.openscience.cdk.tools.LoggingTool;
+import org.openscience.cdk.tools.ILoggingTool;
+import org.openscience.cdk.tools.LoggingToolFactory;
 
 /**
  * Module to rotate a selection of atoms (and their bonds).
@@ -43,7 +45,8 @@ import org.openscience.cdk.tools.LoggingTool;
  */
 public class RotateModule extends ControllerModuleAdapter {
 
-    private LoggingTool logger = new LoggingTool(RotateModule.class);
+    private ILoggingTool logger =
+        LoggingToolFactory.createLoggingTool(RotateModule.class);
 
     private double rotationAngle;
     private boolean selectionMade = false;
