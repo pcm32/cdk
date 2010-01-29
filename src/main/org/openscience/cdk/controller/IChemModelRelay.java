@@ -36,7 +36,7 @@ import org.openscience.cdk.renderer.RendererModel;
 /**
  * @cdk.module control
  */
-public interface IChemModelRelay extends IAtomBondEdits {
+public interface IChemModelRelay extends IAtomBondEdits, IOldChemModelRelay {
 
 	public enum Direction { UP, DOWN, UNDEFINED, EZ_UNDEFINED };
 
