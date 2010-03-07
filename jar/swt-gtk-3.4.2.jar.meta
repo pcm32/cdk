@@ -1,0 +1,6 @@
+[log4j.jar]
+Library=SWT
+Version=3.4.2
+Copyright=2000-2009, IBM Corporation and others
+License=Eclipse Public License 1.0
+Homepage=http://www.eclipse.org/swt/
