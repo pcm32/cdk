@@ -751,6 +751,58 @@
             </jar>
         </target>
 
+        <target id="cdk-jchempaint-large" name="cdk-jchempaint-large" depends="dist-all"
+            description="Builds one big jar file for CDK-JChemPaint, including third-party libraries.">
+
+            <!-- first unjar the CDK and other jars we need -->
+            <mkdir dir="${appjars.dir}"/>
+            <unjar dest="${appjars.dir}">
+                <fileset dir="${lib}">
+                    <includesfile name="${metainf}/control.libdepends"/>
+                    <includesfile name="${metainf}/controlbasic.libdepends"/>
+                    <includesfile name="${metainf}/controlextra.libdepends"/>
+                    <includesfile name="${metainf}/controlawt.libdepends"/>
+                    <includesfile name="${metainf}/render.libdepends"/>
+                    <includesfile name="${metainf}/renderbasic.libdepends"/>
+                    <includesfile name="${metainf}/renderextra.libdepends"/>
+                    <includesfile name="${metainf}/rendercontrol.libdepends"/>
+                    <includesfile name="${metainf}/renderawt.libdepends"/>
+                    <includesfile name="${metainf}/renderswt.libdepends"/>
+                    <includesfile name="${metainf}/rendersvg.libdepends"/>
+                </fileset>
+                <fileset dir="${dist}/jar">
+                    <include name="cdk-control.jar"/>
+                    <include name="cdk-controlbasic.jar"/>
+                    <include name="cdk-controlextra.jar"/>
+                    <include name="cdk-controlawt.jar"/>
+                    <include name="cdk-render.jar"/>
+                    <include name="cdk-renderbasic.jar"/>
+                    <include name="cdk-renderextra.jar"/>
+                    <include name="cdk-rendercontrol.jar"/>
+                    <include name="cdk-renderawt.jar"/>
+                    <include name="cdk-renderswt.jar"/>
+                    <include name="cdk-rendersvg.jar"/>
+                </fileset>
+            </unjar>
+
+            <!-- then zip up things -->
+            <jar jarfile="${dist}/jar/cdk-jchempaint-${jcpversion}.jar">
+                <manifest>
+                    <section name="org.openscience.cdk">
+                        <attribute name="Specification-Title" value="The Chemistry Development Kit"/>
+                        <attribute name="Specification-Version" value="1.2"/>
+                        <attribute name="Specification-Vendor" value="The CDK Project"/>
+                        <attribute name="Implementation-Title" value="org.openscience.cdk"/>
+                        <attribute name="Implementation-Version" value="${version}"/>
+                        <attribute name="Implementation-Vendor" value="The CDK Project"/>
+                    </section>
+                </manifest>
+                <fileset dir="${appjars.dir}">
+                    <include name="**/*" />
+                </fileset>
+            </jar>
+        </target>
+
         <target id="dist-pure" name="dist-pure" depends="dist-all"
             description="Builds one big jar file for the CDK, excluding third party libraries.">
 
