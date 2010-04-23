@@ -107,15 +107,6 @@
       javacchome="jar"/>
   </target>
 
-      <antcall target="doccheck-module"><param name="module" value="renderbasic"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="rendercontrol"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="renderextra"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="renderawt"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="rendersvg"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="control"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="controlbasic"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="controlextra"/></antcall>
-      <antcall target="doccheck-module"><param name="module" value="controlawt"/></antcall>
     <target name="ojdcheck" depends="compileDocTests">
       <antcall target="ojdcheck-module"><param name="module" value="render"/></antcall>
       <antcall target="ojdcheck-module"><param name="module" value="renderbasic"/></antcall>
