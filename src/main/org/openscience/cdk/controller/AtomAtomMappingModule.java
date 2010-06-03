@@ -29,6 +29,7 @@ import org.openscience.cdk.interfaces.IAtom;
 import org.openscience.cdk.interfaces.IMapping;
 import org.openscience.cdk.interfaces.IReaction;
 import org.openscience.cdk.renderer.RendererModel;
+import org.openscience.cdk.renderer.generators.BasicSceneGenerator.Scale;
 import org.openscience.cdk.tools.manipulator.ChemModelManipulator;
 
 /**
@@ -47,7 +48,8 @@ public class AtomAtomMappingModule extends ControllerModuleAdapter {
 
 	public void mouseClickedDown(Point2d worldCoord) {
 		RendererModel model = chemModelRelay.getRenderer().getRenderer2DModel();
-		double dH = model.getHighlightDistance() / model.getScale();
+		double dH = model.getHighlightDistance() /
+		            model.getRenderingParameter(Scale.class).getValue();
 		IAtom closestAtom = chemModelRelay.getClosestAtom(worldCoord);
 
 		if(closestAtom == null || closestAtom.getPoint2d().distance(worldCoord) > dH)
@@ -58,7 +60,8 @@ public class AtomAtomMappingModule extends ControllerModuleAdapter {
 	
 	public void mouseClickedUp(Point2d worldCoord){
 		RendererModel model = chemModelRelay.getRenderer().getRenderer2DModel();
-		double dH = model.getHighlightDistance() / model.getScale();
+		double dH = model.getHighlightDistance() /
+		            model.getRenderingParameter(Scale.class).getValue();
 		IAtom closestAtom = chemModelRelay.getClosestAtom(worldCoord);
 
 		IAtom endAtom = null;
