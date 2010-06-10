@@ -1170,6 +1170,15 @@
                 description="Performs a full JUnit test for the CDK." 
                 if="junit.present">
             <foreach target="test-module" param="module" trim="true"
+                list="render,renderbasic,renderextra,rendercontrol,
+                      renderawt,rendersvg,
+                      control,controlbasic,controlextra,controlawt"/>
+        </target>
+
+        <target id="test-all-original" name="test-all-original" depends="noJunit, dist-all, test-dist-all, jarTestdata"
+                description="Performs a full JUnit test for the CDK."
+                if="junit.present">
+            <foreach target="test-module" param="module" trim="true"
                 list="core,data,datadebug,dict,diff,nonotify,atomtype,standard,
                       io,builder3d,forcefield,valencycheck,charges,reaction,
                       smarts,fingerprint,smiles,qsar,qsaratomic,qsarbond,

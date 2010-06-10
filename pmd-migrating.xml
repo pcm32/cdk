@@ -26,6 +26,29 @@
     <taskdef name="pmd" id="pmd" classname="net.sourceforge.pmd.ant.PMDTask" classpathref="pmd.classpath"/>
 
     <target name="pmd" id="pmd">
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="renderbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="rendercontrol"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="renderextra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="renderawt"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="rendersvg"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="control"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="controlbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="controlextra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="controlawt"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-render"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-control"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-controlbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-controlextra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-controlawt"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-renderbasic"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-rendercontrol"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-renderextra"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-renderawt"/></antcall>
+      <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="test-rendersvg"/></antcall>
+    </target>
+
+    <target name="pmd-original" id="pmd-original">
       <!-- the data classes modules -->
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="data"/></antcall>
       <antcall target="test-module"><param name="pmd.test" value="migrating"/><param name="module" value="datadebug"/></antcall>
