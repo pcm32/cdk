@@ -206,7 +206,7 @@ public class SVGGenerator implements IDrawVisitor {
 
 	public void visit(AtomSymbolElement atomSymbol) {
 		newline();
-		int[] p = transformPoint(atomSymbol.x, atomSymbol.y);
+		int[] p = transformPoint(atomSymbol.xCoord, atomSymbol.yCoord);
 		svg.append(String.format(
 				"<text x=\"%s\" y=\"%s\" style=\"fill:%s\"" +
 				">%s</text>",
@@ -230,7 +230,7 @@ public class SVGGenerator implements IDrawVisitor {
 
 	public void visit(TextElement textElement) {
 		newline();
-		int[] p = transformPoint(textElement.x, textElement.y);
+		int[] p = transformPoint(textElement.xCoord, textElement.yCoord);
 		svg.append(String.format(
 				"<text x=\"%s\" y=\"%s\">%s</text>",
 				p[0],
