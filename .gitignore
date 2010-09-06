@@ -11,5 +11,6 @@ cdk.log*
 *.class
 cdk-src+libs-*.tar.gz
 cdk-src+libs-*.zip
+cdk-jchempaint-*/
 sourcedist
 *~
