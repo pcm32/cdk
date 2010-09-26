@@ -38,7 +38,7 @@ import org.openscience.cdk.tools.manipulator.AtomContainerManipulator;
 /**
  * Returns the number of acidic groups. The list of acidic groups is defined
  * by this SMARTS "$([O;H1]-[C,S,P]=O)", "$([*;-;!$(*~[*;+])])", 
- * "$([NH](S(=O)=O)C(F)(F)F)", "$(n1nnnc1)", and "$(n1nncn1)".
+ * "$([NH](S(=O)=O)C(F)(F)F)", and "$(n1nnnc1)".
  *
  * @author      egonw
  * @cdk.module  qsarmolecular
@@ -52,11 +52,8 @@ public class AcidicGroupCountDescriptor implements IMolecularDescriptor {
     private final static String[] SMARTS_STRINGS = {
         "[$([O;H1]-[C,S,P]=O)]",
         "[$([*;-;!$(*~[*;+])])]",
-        "[$([NH](S(=O)=O)C(F)(F)F)]"
-        // next are commented out because aromaticty is not properly detected
-        // for these type of rings
-        // "[$(n1nnnc1)]"
-        // "[$(n1nncn1)]"
+        "[$([NH](S(=O)=O)C(F)(F)F)]",
+        "[$(n1nnnc1)]"
     };
     private final static String[] names = {"nAcid"};
 
