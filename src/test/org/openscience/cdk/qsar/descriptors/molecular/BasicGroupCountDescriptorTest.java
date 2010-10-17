@@ -26,6 +26,9 @@ import org.openscience.cdk.nonotify.NoNotificationChemObjectBuilder;
 import org.openscience.cdk.qsar.result.IntegerResult;
 import org.openscience.cdk.smiles.SmilesParser;
 
+/**
+ * @cdk.module test-qsarmolecular
+ */
 public class BasicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
     @Before
