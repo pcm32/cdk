@@ -88,7 +88,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
         IMolecule mol = sp.parseSmiles("[nH]1nnnc1");
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
-        Assert.assertEquals(1, result.intValue());
+        Assert.assertEquals(2, result.intValue());
     }
 
     /**
@@ -159,7 +159,7 @@ public class AcidicGroupCountDescriptorTest extends MolecularDescriptorTest {
 
         IntegerResult result =
             (IntegerResult)descriptor.calculate(mol).getValue();
-        Assert.assertEquals(2, result.intValue());
+        Assert.assertEquals(3, result.intValue());
       }
 
 }
