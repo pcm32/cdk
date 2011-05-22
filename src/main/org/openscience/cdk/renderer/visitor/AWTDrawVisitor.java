@@ -523,7 +523,7 @@ public class AWTDrawVisitor extends AbstractAWTDrawVisitor {
 
     public void setRendererModel(RendererModel rendererModel) {
         this.rendererModel = rendererModel;
-        if ((boolean)rendererModel.getParameter(UseAntiAliasing.class)
+        if ((Boolean)rendererModel.getParameter(UseAntiAliasing.class)
             .getValue()) {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
