@@ -104,7 +104,7 @@ public class SVGGenerator implements IDrawVisitor {
 	public void visit(WedgeLineElement wedge) {
         // make the vector normal to the wedge axis
         Vector2d normal = 
-            new Vector2d(wedge.y1 - wedge.y2, wedge.x2 - wedge.x1);
+            new Vector2d(wedge.firstPointY - wedge.secondPointY, wedge.secondPointX - wedge.firstPointX);
         normal.normalize();
         normal.scale(
             rendererModel.getParameter(WedgeWidth.class).getValue() /
@@ -112,8 +112,8 @@ public class SVGGenerator implements IDrawVisitor {
         );  
         
         // make the triangle corners
-        Point2d vertexA = new Point2d(wedge.x1, wedge.y1);
-        Point2d vertexB = new Point2d(wedge.x2, wedge.y2);
+        Point2d vertexA = new Point2d(wedge.firstPointX, wedge.firstPointY);
+        Point2d vertexB = new Point2d(wedge.secondPointX, wedge.secondPointY);
         Point2d vertexC = new Point2d(vertexB);
         vertexB.add(normal);
         vertexC.sub(normal);
@@ -147,8 +147,8 @@ public class SVGGenerator implements IDrawVisitor {
 	public void visit(LineElement line) {
 		newline();
 
-		int[] p1 = transformPoint(line.x1, line.y1);
-		int[] p2 = transformPoint(line.x2, line.y2);
+		int[] p1 = transformPoint(line.firstPointX, line.firstPointY);
+		int[] p2 = transformPoint(line.secondPointX, line.secondPointY);
 		svg.append(String.format(
 					"<line x1=\"%s\" y1=\"%s\" x2=\"%s\" y2=\"%s\" " +
 					"style=\"stroke:black; stroke-width:1px;\" />",
@@ -196,8 +196,8 @@ public class SVGGenerator implements IDrawVisitor {
 
 	public void visit(OvalElement oval) {
 		newline();
-		int[] p1 = transformPoint(oval.x - oval.radius, oval.y - oval.radius);
-		int[] p2 = transformPoint(oval.x + oval.radius, oval.y + oval.radius);
+		int[] p1 = transformPoint(oval.xCoord - oval.radius, oval.yCoord - oval.radius);
+		int[] p2 = transformPoint(oval.xCoord + oval.radius, oval.yCoord + oval.radius);
 		int r = (p2[0] - p1[0]) / 2;
 		svg.append(String.format(
 				"<ellipse cx=\"%s\" cy=\"%s\" rx=\"%s\" ry=\"%s\" " +
@@ -309,10 +309,10 @@ public class SVGGenerator implements IDrawVisitor {
 
 
 	public void visit(RectangleElement rectangleElement) {
-        int[] pA = this.transformPoint(rectangleElement.x, rectangleElement.y);
-        int[] pB = this.transformPoint(rectangleElement.x+rectangleElement.width, rectangleElement.y);
-        int[] pC = this.transformPoint(rectangleElement.x, rectangleElement.y+rectangleElement.height);
-        int[] pD = this.transformPoint(rectangleElement.x+rectangleElement.width, rectangleElement.y+rectangleElement.height);
+        int[] pA = this.transformPoint(rectangleElement.xCoord, rectangleElement.yCoord);
+        int[] pB = this.transformPoint(rectangleElement.xCoord+rectangleElement.width, rectangleElement.yCoord);
+        int[] pC = this.transformPoint(rectangleElement.xCoord, rectangleElement.yCoord+rectangleElement.height);
+        int[] pD = this.transformPoint(rectangleElement.xCoord+rectangleElement.width, rectangleElement.yCoord+rectangleElement.height);
         
         newline();
 		svg.append(String.format(
